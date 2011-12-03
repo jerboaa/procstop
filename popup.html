@@ -80,10 +80,16 @@ function closeMe() {
 }
 
 // start the add-on
-function setStarted() {
-	chrome.extension.sendRequest({started: true}, function(response) {
-		// ignored
-	});
+function setStarted( timeout ) {
+	chrome.extension.sendRequest(
+		{
+			started: true,
+			timeoutVal: timeout
+		},
+		function(response) {
+			// ignored
+		}
+	);
 }
 
 // stop the add-on
@@ -99,6 +105,7 @@ function setStopped() {
 // and add-on is stopped respectively.
 function initAddOn() {
 	chrome.extension.sendRequest({isInit: true}, function(response) {
+		// handle flashing icon
 		// set the icon accordingly
 		if ( response.currentStatus == null ) {
 			// un-initialized use neutral icon
@@ -122,7 +129,7 @@ function initAddOn() {
 function updateIconAndStart() {
 	if ( $('#start_button')[0].value == "Start" ) {
 		// user clicked start, change state accordingly
-		setStarted();
+		setStarted( parseInt( $('#range-slider')[0].value ) );
 		closeMe();
 		console.log("started");
 	} else {
@@ -161,7 +168,7 @@ function updateIconAndStart() {
 			</tr>
 		
 			<tr>
-			<td class="left-padded"><input type="range" min="1" max="6" value="1" step="1" onchange="updateRange(this.value)" /></td>
+			<td class="left-padded"><input type="range" min="1" max="6" value="1" step="1" onchange="updateRange(this.value)" id="range-slider" /></td>
 			</tr>
 			<tr>
 			<td class="left-padded"><Pre>1h 2h 3h 4h 5h 6h</Pre></td>

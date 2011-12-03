@@ -6,5 +6,8 @@
     "default_icon": "icon.png",
     "popup": "popup.html"
   },
-  "background_page": "backgroundpage.html"
+  "background_page": "backgroundpage.html",
+  "permissions": [
+    "notifications"
+  ]
 }

@@ -4,6 +4,63 @@
 // global state of the add-on (null == Browser just started, true == add-on is started,
 // false == add-on is stopped)
 var isStarted = null;
+var isIconFlashing = false;
+var iconFlashId = null;
+var isFlashIconActive = false;
+
+// reset the icon according to its state
+function resetIcon() {
+	if ( isStarted == null ) {
+		chrome.browserAction.setIcon({
+			"path": "icon.png"
+		});
+	}
+	else if ( isStarted == true ) {
+		chrome.browserAction.setIcon({
+			"path": "clock_play.png"
+		});
+	}
+	else {
+		chrome.browserAction.setIcon({
+			"path": "clock_stop.png"
+		});
+	}
+}
+
+// Periodically called until a user clicks the icon.
+function flashIcon() {		
+	if ( isFlashIconActive ) {
+		resetIcon();
+		isFlashIconActive = false;
+	} else {
+		chrome.browserAction.setIcon({
+			"path": "clock_red.png"
+		});
+		isFlashIconActive = true;
+	}
+}
+
+// cancel
+function cancelIconFlash() {		
+	if ( isIconFlashing ) {
+		window.clearInterval(iconFlashId);
+	}
+	isIconFlashing = false;
+	resetIcon();
+}
+
+// called after a given timeout when the add-on was started.
+function showPopUpMessage() {
+	console.log("timeout expired");
+	// show the notification
+	var notification = webkitNotifications.createHTMLNotification(
+		'notification.html'
+	);
+	notification.show();
+	// icon should flash
+	iconFlashId = window.setInterval( function() { flashIcon(); }, 500 );
+	isIconFlashing = true;
+}
 
 chrome.extension.onRequest.addListener(
 	function(request, sender, sendResponse) {
@@ -22,6 +79,9 @@ chrome.extension.onRequest.addListener(
 			// send empty response since this is good practice
 			sendResponse({});
 			console.log("bg-page: started add-on");
+			console.log("starting timeout of " + request.timeoutVal + " seconds");
+			window.setTimeout( function() { showPopUpMessage() },
+				request.timeoutVal * 1000 );
 		}
 		else if (request.started != null && request.started == false) {
 			isStarted = false;
