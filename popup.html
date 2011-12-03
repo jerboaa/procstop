@@ -1,0 +1,155 @@
+<html>
+<head>
+<script src="jquery-1.7.1.min.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="main.css"/>
+<style>
+body {
+  width:400px;
+  height:325px;
+}
+
+img {
+  margin:5px;
+  border:2px solid black;
+  vertical-align:middle;
+  width:75px;
+  height:75px;
+}
+
+#main-text {
+  padding-left: 5px;
+  padding-top: 20px;
+}
+
+#history {
+  padding-left: 25px;
+}
+
+#start_button {
+  height: 50px;
+  width: 80px;
+}
+
+div#box {
+  margin: 20px;
+  padding: 5px;
+  background: white;
+  border-radius: 5px;
+  -webkit-box-shadow: 2px 5px 12px #555;
+}
+
+div#close {
+  border-radius: 3px;
+  border: 1px solid #CCC;
+  position: absolute;
+  top: 25px;
+  right: 33px;
+  padding: 2px;
+  font-size: 0.8em;
+  width: 13px;
+  text-align: center;
+  vertical-align: middle;
+  color: Gray;
+}
+
+td.left-padded {
+  padding-left: 23px;
+}
+
+div#close a {
+  text-decoration: none;
+  color: Gray;
+}
+
+</style>
+<script type="text/javascript">
+function updateRange(num) {
+	$('#range_val')[0].innerHTML = num;
+}
+
+function closeMe() {
+	var views = chrome.extension.getViews();
+      	for (var i = 0; i < views.length; i++) {
+		var view = views[i];
+		if (view.location.href == chrome.extension.getURL('popup.html')) {
+		view.close();
+		break;
+		}
+	}
+}
+
+function updateIconAndStart() {
+	if ( $('#start_button')[0].value == "Start" ) {
+		console.log("started");
+		// change the icon of the add-on
+		chrome.browserAction.setIcon({
+			"path": "clock_play.png"
+		});
+		$('#start_button')[0].value = "Stop";
+		closeMe();
+	} else {
+		$('#start_button')[0].value = "Start";
+		console.log("stopped");
+		// change the icon of the add-on
+		chrome.browserAction.setIcon({
+			"path": "clock_stop.png"
+		});
+	}
+}
+
+</script>
+</head>
+<body>
+<div id="box">
+<div id="close"><a href="#">x</a></div>
+<table id="main-table">
+	<tr>
+		<td colspan="2" width="320" id="main-text">
+		
+		The time range below determines the frequency of notifications
+		from this extension. The notifications help you notice how
+		long you've been online. First time user? <a href="#" onclick="chrome.tabs.create({'url': chrome.extension.getURL('firstrun.html')}, null);">Read our getting-started guide</a>.
+		
+		</td>
+
+	</tr>
+	<tr>
+	<td height="100" width="224">
+	<table>
+			<tr>
+			<td width="200" id="timerange">
+			
+			<br/>
+			<strong>Time range:</strong> 0 to <span id="range_val">1</span> hours.<span class="help"><a href="#" title="What's this?">(?)</a></span>
+			
+			</td>
+			</tr>
+		
+			<tr>
+			<td class="left-padded"><input type="range" min="1" max="6" value="1" step="1" onchange="updateRange(this.value)" /></td>
+			</tr>
+			<tr>
+			<td class="left-padded"><Pre>1h 2h 3h 4h 5h 6h</Pre></td>
+			</tr>
+			<tr>
+			<td>
+			<br/>	
+				<input type="checkbox" name="notificationCheckbox" value="notify" /> Enable notifications <span class="help"><a href="#" title="What's this?">(?)</a></span>
+			</td>
+			</tr>
+			<tr>
+			<td id="history">
+				<a href="notification.html">History</a> <span class="help"><a href="#" title="What's this?">(?)</a></span>
+			</td>
+			</tr>
+		</table>
+				</td>
+				
+		<td>
+			<input type="button" id="start_button" value="Start" onclick="updateIconAndStart();"/>
+		</td>
+	</tr>
+</table>
+</div>
+</body>
+</html>

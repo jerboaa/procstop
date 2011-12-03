@@ -1,0 +1,10 @@
+{
+  "name": "Itchy Duck",
+  "version": "1.0",
+  "description": "Trains your perception of time.",
+  "browser_action": {
+    "default_icon": "icon.png"	,
+    "popup": "popup.html"
+  },
+  "background_page": "backgroundpage.html"
+}
