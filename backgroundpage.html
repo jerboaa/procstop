@@ -1,23 +1,39 @@
 <html>
 <script>
-// React when the start button is clicked.
-chrome.browserAction.onClicked.addListener(function(tab) {
-var viewTabUrl = chrome.extension.getURL('popup.html');
-var numClicked = 0;
-//Look through all the pages in this extension to find one we can use.
-var views = chrome.extension.getViews();
-for (var i = 0; i < views.length; i++) {
-	var view = views[i];
 
-	//If this view has the right URL and hasn't been used yet...
-	if (view.location.href == viewTabUrl && !view.alreadyStarted) {
+// global state of the add-on (null == Browser just started, true == add-on is started,
+// false == add-on is stopped)
+var isStarted = null;
 
-		//...call one of its functions and set a property.
-		view.setNumClicked(numClicked++);
-		view.alreadyStarted = true;
-		break;
+chrome.extension.onRequest.addListener(
+	function(request, sender, sendResponse) {
+		// handle init
+		if ( request.isInit != null && request.isInit ) {
+			sendResponse({
+				currentStatus: isStarted
+			});
+		}
+		// handle start/stop
+		else if ( request.started != null && request.started == true) {
+			isStarted = true;
+			chrome.browserAction.setIcon({
+				"path": "clock_play.png"
+			});
+			// send empty response since this is good practice
+			sendResponse({});
+			console.log("bg-page: started add-on");
+		}
+		else if (request.started != null && request.started == false) {
+			isStarted = false;
+			chrome.browserAction.setIcon({
+				"path": "clock_stop.png"
+			});
+			// send empty response since this is good practice
+			sendResponse({});
+			console.log("bg-page: stopped add-on");
+		}
+		
 	}
-}
-});
+);
 </script>
 </html>
