@@ -67,6 +67,7 @@ function updateRange(num) {
 	$('#range_val')[0].innerHTML = num;
 }
 
+// close the pop-up
 function closeMe() {
 	var views = chrome.extension.getViews();
       	for (var i = 0; i < views.length; i++) {
@@ -78,30 +79,64 @@ function closeMe() {
 	}
 }
 
-function updateIconAndStart() {
-	if ( $('#start_button')[0].value == "Start" ) {
-		console.log("started");
-		// change the icon of the add-on
-		chrome.browserAction.setIcon({
-			"path": "clock_play.png"
-		});
-		$('#start_button')[0].value = "Stop";
-		closeMe();
-	} else {
-		$('#start_button')[0].value = "Start";
-		console.log("stopped");
-		// change the icon of the add-on
-		chrome.browserAction.setIcon({
-			"path": "clock_stop.png"
-		});
-	}
+// start the add-on
+function setStarted() {
+	chrome.extension.sendRequest({started: true}, function(response) {
+		// ignored
+	});
 }
 
+// stop the add-on
+function setStopped() {
+	chrome.extension.sendRequest({started: false}, function(response) {
+		// ignored
+	});
+}
+
+// Initialize the add-on state. Calls the background page
+// and determines the current status (null, true, false) which
+// means first start-up of this browser session, add-on is started
+// and add-on is stopped respectively.
+function initAddOn() {
+	chrome.extension.sendRequest({isInit: true}, function(response) {
+		// set the icon accordingly
+		if ( response.currentStatus == null ) {
+			// un-initialized use neutral icon
+			chrome.browserAction.setIcon({
+				path: "icon.png"
+			});
+		} else if ( response.currentStatus != null &&
+				response.currentStatus == true ) {
+			// already started, set the button to "Stop"
+			$('#start_button')[0].value = "Stop";
+			console.log("Button set to stop");
+		} else if ( response.currentStatus != null &&
+				response.currentStatus == false ) {
+			// already started, set the button to "Stop"
+			$('#start_button')[0].value = "Start";
+			console.log("Button set to start");
+		}
+	});
+}
+
+function updateIconAndStart() {
+	if ( $('#start_button')[0].value == "Start" ) {
+		// user clicked start, change state accordingly
+		setStarted();
+		closeMe();
+		console.log("started");
+	} else {
+		// user clicked stop, change state accordingly
+		setStopped();
+		closeMe();
+		console.log("stopped");
+	}
+}
 </script>
 </head>
-<body>
+<body onload="initAddOn();">
 <div id="box">
-<div id="close"><a href="#">x</a></div>
+<div id="close"><a href="#" onclick="closeMe()">x</a></div>
 <table id="main-table">
 	<tr>
 		<td colspan="2" width="320" id="main-text">
