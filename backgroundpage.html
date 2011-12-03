@@ -67,8 +67,15 @@ chrome.extension.onRequest.addListener(
 		// handle init
 		if ( request.isInit != null && request.isInit ) {
 			sendResponse({
-				currentStatus: isStarted
+				currentStatus: isStarted,
+				"isIconFlashing": isIconFlashing
 			});
+			if ( isIconFlashing ) {
+				cancelIconFlash();
+				// timer expired mark add-on as stopped
+				isStarted = false;
+				resetIcon();
+			}
 		}
 		// handle start/stop
 		else if ( request.started != null && request.started == true) {

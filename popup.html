@@ -1,13 +1,9 @@
+<!DOCTYPE HTML> 
 <html>
 <head>
 <script src="jquery-1.7.1.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="main.css"/>
 <style>
-body {
-  width:400px;
-  height:325px;
-}
-
 img {
   margin:5px;
   border:2px solid black;
@@ -16,7 +12,7 @@ img {
   height:75px;
 }
 
-#main-text {
+#main-text, #notification {
   padding-left: 5px;
   padding-top: 20px;
 }
@@ -106,6 +102,18 @@ function setStopped() {
 function initAddOn() {
 	chrome.extension.sendRequest({isInit: true}, function(response) {
 		// handle flashing icon
+		if ( response.isIconFlashing ) {
+			console.log("icon is flashing");
+			$('#main-table').hide();
+			$('div#box').css("height", "80px");
+			$('div#box').css("width", "330px");
+			$('#notification').show();
+		} else {
+			$('body').css("width", "400px");
+			//$('body').css("width", "370px");
+			$('body').css("height", "345px");
+			//$('body').css("height", "325px");
+		}
 		// set the icon accordingly
 		if ( response.currentStatus == null ) {
 			// un-initialized use neutral icon
@@ -192,6 +200,11 @@ function updateIconAndStart() {
 		</td>
 	</tr>
 </table>
+<div id="notification" style="display: none;">
+	<p>You've been browsing for a long time.
+	<br/>
+	<a href="nextPage.html">Want to see how long?</a></p>
+</div>
 </div>
 </body>
 </html>
