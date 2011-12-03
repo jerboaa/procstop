@@ -55,6 +55,10 @@ td.left-padded {
   padding-left: 23px;
 }
 
+td.left-padded-more {
+  padding-left: 42px;
+}
+
 div#close a {
   text-decoration: none;
   color: Gray;
@@ -73,44 +77,12 @@ function closeMe() {
 	var views = chrome.extension.getViews();
       	for (var i = 0; i < views.length; i++) {
 		var view = views[i];
-		if (view.location.href == chrome.extension.getURL('guess_results.html')) {
+		if (view.location.href == chrome.extension.getURL('satisfaction_rating.html')) {
 		view.close();
 		break;
 		}
 	}
 }
-
-// Get the background page in order to access variables
-//var bkg = chrome.extension.getBackgroundPage();
-
-// Get value of the timer
-//var timerValue = bkg.getTimerValue();
-
-// Get value of the user's guess
-//var userGuessTime = bkg.getUserGuessTime();
-var userGuessHoursTemp = 3;
-var userGuessMinsTemp = 34;
-
-// Calcluate the difference
-// var difference
-var differenceTemp = 45;
-
-// Turn that into minutes/hour format
-
-// Determine the correct message to display (spent more/less/same as thought)
-function getFinalMessage(difference) {
-	var message;
-	if (difference > 0) {	
-		message = "You spent more time online than you thought!";
-	} else if (difference < 0) {
-		message = "You spent less time online than you thought!";
-	} else {
-		message = "You guessed right on! Well done!";
-	}	
-	return message;
-}
-
-var finalMessage = getFinalMessage(differenceTemp);
 
 </script>
 </head>
@@ -122,17 +94,51 @@ var finalMessage = getFinalMessage(differenceTemp);
 <table id="guess-time-table">
 	<tr>
 		<td align="center" colspan=2>
-			<div id="title">Results</div>
+			<div id="title">What do you think?</div>
 		</td>
 	</tr>
 	<tr>
 		<td align="center">
-			<img id="guess_time_image" src="clock_guess_placeholder.png"/>
+			<img src="clock_guess_placeholder.png"/>
 		</td>		
 		<td>
-			Actually, the time you spent was <script type="text/javascript"> document.write(userGuessTimeTest);</script>
- hours and <script type="text/javascript"> document.write(userGuessMinsTemp);</script> minutes! Your guess was <script type="text/javascript"> document.write(differenceTemp);</script>  minutes less than that. <script type="text/javascript"> document.write(finalMessage);</script> 
+			<table>
+				<tr>
+					<td>
+						Are you satisfied with how long you spent browsing the web?		
+					</td>
+				</tr>				
+				<tr>
+					<td align="center"><input type="range" min="1" max="4" value="0" step="1" id="satisfaction-slider" /></td>
+				</tr>
+				<tr>
+					<td>
+						<table>
+							<tr>
+								<td class="left-padded">
+									<pre>  Not</pre>
+								</td>
+							
+								<td class="left-padded-more">
+									<pre>  Very</pre>
+								</td>
+							</tr>
+							<tr>
+								<td class="left-padded">
+									<pre>Satisifed</pre>
+								</td>
+							
+								<td class="left-padded-more">
+									<pre>Satisfied</pre>
+								</td>
+							</tr>									
+						</table>					
+					</td>
+				</tr>
+			</table>			
 		</td>
+
+
 	</tr>
 	<tr>
 		<td colspan=2 align="right">
