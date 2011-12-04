@@ -8,6 +8,11 @@ var isIconFlashing = false;
 var iconFlashId = null;
 var isFlashIconActive = false;
 
+// Varibles for what the user inputs as their guess
+var guessHours;
+var guessMins;
+var actualTimout;
+
 // reset the icon according to its state
 function resetIcon() {
 	if ( isStarted == null ) {
@@ -87,6 +92,11 @@ chrome.extension.onRequest.addListener(
 			sendResponse({});
 			console.log("bg-page: started add-on");
 			console.log("starting timeout of " + request.timeoutVal + " seconds");
+			
+			// Set the actual time out value and change the hours to seconds (and ensures the random value is more than 30 minutes)			
+			actualTimeout = Math.floor(Math.random() * ((request.timeoutVal * 3600) - 1800 + 1) + 1800);
+			console.log("actual timeout of " + actualTimeout + " seconds");
+						
 			window.setTimeout( function() { showPopUpMessage() },
 				request.timeoutVal * 1000 );
 		}
@@ -98,6 +108,14 @@ chrome.extension.onRequest.addListener(
 			// send empty response since this is good practice
 			sendResponse({});
 			console.log("bg-page: stopped add-on");
+		}
+		else if (request.isGuess != null && request.isGuess) {
+			
+			// send empty response since this is good practice
+			sendResponse({});
+			guessHours = request.guessHours;
+			guessMins = request.guessMins;
+			console.log("Retrieved from Guess time! page -- Hours: " + guessHours + " & Minutes: " + guessMins);
 		}
 		
 	}

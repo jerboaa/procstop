@@ -74,10 +74,34 @@ function closeMe() {
       	for (var i = 0; i < views.length; i++) {
 		var view = views[i];
 		if (view.location.href == chrome.extension.getURL('guess_time.html')) {
-		view.close();
-		break;
+			view.close();
+			break;
 		}
 	}
+}
+	
+// The hours and minutes that the user guesses
+var guessedHours;
+var guessedMinutes;
+
+// Sends the user's guess to the background page 
+function sendUserGuess() {
+	hours = parseInt($('#hour-select')[0].value);
+	minutes = parseInt($('#minute-select')[0].value);
+	
+	console.log(minutes + "<- Minutes || Hours ->" + hours);
+
+	chrome.extension.sendRequest(
+		{
+			isGuess: true,
+			guessHours: hours,
+			guessMins: minutes
+		},
+		function(response) {
+			// ignored
+		}
+	);
+	
 }
 
 </script>
@@ -95,7 +119,7 @@ function closeMe() {
 	</tr>
 	<tr>
 		<td colspan="2" width="320" id="main-text" align="center">		
-			<select>
+			<select id="hour-select">
 				<option value="0">0</option>
 				<option value="1">1</option>
 				<option value="2">2</option>
@@ -106,7 +130,7 @@ function closeMe() {
 				<option value="7">7</option>
 			</select>
 			hour(s) and 
-			<select>
+			<select id="minute-select">
 				<option value="1">0</option>
 				<option value="1">1</option>
 				<option value="2">2</option>
@@ -181,7 +205,7 @@ function closeMe() {
 	</tr>
 	<tr>
 		<td colspan=2 align="right">
-			<input type="button" id="guess_time_continue_button" value="Continue" onclick=""/>
+			<input type="button" id="guess_time_continue_button" value="Continue" onclick="sendUserGuess();"/>
 		</td>
 	</tr>
 	
