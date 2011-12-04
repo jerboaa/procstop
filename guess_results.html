@@ -51,7 +51,6 @@ var bkg = chrome.extension.getBackgroundPage();
 
 // Get value of the timer
 var actualTime = bkg.actualTimeout;
-console.log("actualTime:" + actualTime);
 
 // Turn the actual time into into minutes/hour format for display purposes
 var actualHours = Math.floor(actualTime / 3600);
@@ -70,22 +69,25 @@ var absDifference = Math.abs(difference);
 
 // Make that into the minutes and hour format for display purposes
 var differenceHours = Math.floor(absDifference / 3600);
-var actualMins = Math.floor(absDifference / 60) - (differenceHours * 60);
+var differenceMins = Math.floor(absDifference / 60) - (differenceHours * 60);
 
-var differenceText = "";
-
-if (differenceHours > 0 && difference < 0) {
-	differenceText = differenceHours.toString() + " hours and " + differenceMins.toString() + " minutes off!";
-} else if (difference == 0) {
-	differenceText = "right on!";
-} else {
-	differenceText = differenceMins.toString() + " minutes off."
+function getDifferenceText(difference, differenceHours, differenceMins) {
+	var differenceText;
+	if (differenceHours > 0 && difference < 0) {
+		differenceText = differenceHours.toString() + " hours and " + differenceMins.toString() + " minutes off!";
+	} else if (difference == 0) {
+		differenceText = "right on!";
+	} else {
+		differenceText = differenceMins.toString() + " minutes off.";
+	}
+	
+	return differenceText;
 }
 
 // Determine the correct message to display (spent more/less/same as thought)
 function getFinalMessage(difference) {
 	var message;
-	if (difference > 0) {	
+	if (difference > 0) {
 		message = " You spent more time online than you thought!";
 	} else if (difference < 0) {
 		message = " You spent less time online than you thought!";
@@ -95,7 +97,7 @@ function getFinalMessage(difference) {
 	return message;
 }
 
-var finalMessage = getFinalMessage(differenceTemp);
+var finalMessage = getFinalMessage(difference);
 
 </script>
 </head>
@@ -116,7 +118,7 @@ var finalMessage = getFinalMessage(differenceTemp);
 		</td>		
 		<td>
 			Actually, the time you spent was <script type="text/javascript"> document.write(actualHours);</script>
- hours and <script type="text/javascript"> document.write(actualMins);</script> minutes! Your guess was <script type="text/javascript"> document.write(differenceText);</script><script type="text/javascript"> document.write(finalMessage);</script> 
+ hours and <script type="text/javascript"> document.write(actualMins);</script> minutes! Your guess was <script type="text/javascript"> document.write(getDifferenceText(difference, differenceHours, differenceMins));</script><script type="text/javascript"> document.write(finalMessage);</script> 
 		</td>
 	</tr>
 	<div class="controls">
