@@ -1,11 +1,13 @@
+<!DOCTYPE HTML> 
 <html>
 <head>
-<script src="jquery-1.7.1.min.js" type="text/javascript"></script>
+<script src="close.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="main.css"/>
 <style>
+
 body {
-  width:400px;
-  height:325px;
+  width:430px;
+  height:275px;
 }
 
 img {
@@ -15,40 +17,8 @@ img {
   height:100px;
 }
 
-#main-text {
-  padding-left: 5px;
-  padding-top: 20px;
-}
-
-#history {
-  padding-left: 25px;
-}
-
-#start_button {
-  height: 50px;
-  width: 80px;
-}
-
 div#box {
-  margin: 20px;
-  padding: 5px;
-  background: white;
-  border-radius: 5px;
-  -webkit-box-shadow: 2px 5px 12px #555;
-}
-
-div#close {
-  border-radius: 3px;
-  border: 1px solid #CCC;
-  position: absolute;
-  top: 25px;
-  right: 33px;
-  padding: 2px;
-  font-size: 0.8em;
-  width: 13px;
-  text-align: center;
-  vertical-align: middle;
-  color: Gray;
+  height: 245px;
 }
 
 td.left-padded {
@@ -59,42 +29,30 @@ td.left-padded-more {
   padding-left: 42px;
 }
 
-div#close a {
-  text-decoration: none;
-  color: Gray;
+div#title {
+  text-align: center;
+  font-size: 20;
 }
 
-div#title {
-  text-align:center;
-  font-size:40;
+div.controls {
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  margin-bottom: 17px;
+  margin-right: 7px;
 }
 
 </style>
-<script type="text/javascript">
-
-// close the pop-up
-function closeMe() {
-	var views = chrome.extension.getViews();
-      	for (var i = 0; i < views.length; i++) {
-		var view = views[i];
-		if (view.location.href == chrome.extension.getURL('satisfaction_rating.html')) {
-		view.close();
-		break;
-		}
-	}
-}
-
-</script>
 </head>
 
 <body>
 <div id="box">
-<div id="close"><a href="#" onclick="closeMe()">x</a></div>
+<div id="close"><a href="#" onclick="closeMe(chrome.extension.getURL('satisfaction_rating.html'))">x</a></div>
 
 <table id="guess-time-table">
 	<tr>
 		<td align="center" colspan=2>
-			<div id="title">What do you think?</div>
+			<h1>What do you think?</h1>
 		</td>
 	</tr>
 	<tr>
@@ -113,26 +71,7 @@ function closeMe() {
 				</tr>
 				<tr>
 					<td>
-						<table>
-							<tr>
-								<td class="left-padded">
-									<pre>  Not</pre>
-								</td>
-							
-								<td class="left-padded-more">
-									<pre>  Very</pre>
-								</td>
-							</tr>
-							<tr>
-								<td class="left-padded">
-									<pre>Satisifed</pre>
-								</td>
-							
-								<td class="left-padded-more">
-									<pre>Satisfied</pre>
-								</td>
-							</tr>									
-						</table>					
+						<span id="not_satisfied">Not satisfied at all</span><span id="very_satisfied">Very satisfied</span>
 					</td>
 				</tr>
 			</table>			
@@ -140,12 +79,10 @@ function closeMe() {
 
 
 	</tr>
-	<tr>
-		<td colspan=2 align="right">
-			<input type="button" id="guess_results_continue_button" value="Continue" onclick=""/>
-		</td>
-	</tr>
-	
+	<div class="controls">
+		<input type="button" value="Back" onclick="window.location.href = 'guess_results.html';"/>
+		<input type="button" id="guess_results_continue_button" value="Done" onclick="closeMe(chrome.extension.getURL('satisfaction_rating.html'));"/>
+	</div>
 </table>
 </div>
 </body>
