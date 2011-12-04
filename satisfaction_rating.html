@@ -1,0 +1,152 @@
+<html>
+<head>
+<script src="jquery-1.7.1.min.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="main.css"/>
+<style>
+body {
+  width:400px;
+  height:325px;
+}
+
+img {
+  margin:5px;
+  vertical-align:middle;
+  width:100px;
+  height:100px;
+}
+
+#main-text {
+  padding-left: 5px;
+  padding-top: 20px;
+}
+
+#history {
+  padding-left: 25px;
+}
+
+#start_button {
+  height: 50px;
+  width: 80px;
+}
+
+div#box {
+  margin: 20px;
+  padding: 5px;
+  background: white;
+  border-radius: 5px;
+  -webkit-box-shadow: 2px 5px 12px #555;
+}
+
+div#close {
+  border-radius: 3px;
+  border: 1px solid #CCC;
+  position: absolute;
+  top: 25px;
+  right: 33px;
+  padding: 2px;
+  font-size: 0.8em;
+  width: 13px;
+  text-align: center;
+  vertical-align: middle;
+  color: Gray;
+}
+
+td.left-padded {
+  padding-left: 23px;
+}
+
+td.left-padded-more {
+  padding-left: 42px;
+}
+
+div#close a {
+  text-decoration: none;
+  color: Gray;
+}
+
+div#title {
+  text-align:center;
+  font-size:40;
+}
+
+</style>
+<script type="text/javascript">
+
+// close the pop-up
+function closeMe() {
+	var views = chrome.extension.getViews();
+      	for (var i = 0; i < views.length; i++) {
+		var view = views[i];
+		if (view.location.href == chrome.extension.getURL('satisfaction_rating.html')) {
+		view.close();
+		break;
+		}
+	}
+}
+
+</script>
+</head>
+
+<body>
+<div id="box">
+<div id="close"><a href="#" onclick="closeMe()">x</a></div>
+
+<table id="guess-time-table">
+	<tr>
+		<td align="center" colspan=2>
+			<div id="title">What do you think?</div>
+		</td>
+	</tr>
+	<tr>
+		<td align="center">
+			<img src="clock_guess_placeholder.png"/>
+		</td>		
+		<td>
+			<table>
+				<tr>
+					<td>
+						Are you satisfied with how long you spent browsing the web?		
+					</td>
+				</tr>				
+				<tr>
+					<td align="center"><input type="range" min="1" max="4" value="0" step="1" id="satisfaction-slider" /></td>
+				</tr>
+				<tr>
+					<td>
+						<table>
+							<tr>
+								<td class="left-padded">
+									<pre>  Not</pre>
+								</td>
+							
+								<td class="left-padded-more">
+									<pre>  Very</pre>
+								</td>
+							</tr>
+							<tr>
+								<td class="left-padded">
+									<pre>Satisifed</pre>
+								</td>
+							
+								<td class="left-padded-more">
+									<pre>Satisfied</pre>
+								</td>
+							</tr>									
+						</table>					
+					</td>
+				</tr>
+			</table>			
+		</td>
+
+
+	</tr>
+	<tr>
+		<td colspan=2 align="right">
+			<input type="button" id="guess_results_continue_button" value="Continue" onclick=""/>
+		</td>
+	</tr>
+	
+</table>
+</div>
+</body>
+</html>

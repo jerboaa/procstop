@@ -1,0 +1,146 @@
+<html>
+<head>
+<script src="jquery-1.7.1.min.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="main.css"/>
+<style>
+body {
+  width:400px;
+  height:325px;
+}
+
+img {
+  margin:5px;
+  vertical-align:middle;
+  width:100px;
+  height:100px;
+}
+
+#main-text {
+  padding-left: 5px;
+  padding-top: 20px;
+}
+
+#history {
+  padding-left: 25px;
+}
+
+#start_button {
+  height: 50px;
+  width: 80px;
+}
+
+div#box {
+  margin: 20px;
+  padding: 5px;
+  background: white;
+  border-radius: 5px;
+  -webkit-box-shadow: 2px 5px 12px #555;
+}
+
+div#close {
+  border-radius: 3px;
+  border: 1px solid #CCC;
+  position: absolute;
+  top: 25px;
+  right: 33px;
+  padding: 2px;
+  font-size: 0.8em;
+  width: 13px;
+  text-align: center;
+  vertical-align: middle;
+  color: Gray;
+}
+
+td.left-padded {
+  padding-left: 23px;
+}
+
+div#close a {
+  text-decoration: none;
+  color: Gray;
+}
+
+div#title {
+  text-align:center;
+  font-size:40;
+}
+
+</style>
+<script type="text/javascript">
+
+// close the pop-up
+function closeMe() {
+	var views = chrome.extension.getViews();
+      	for (var i = 0; i < views.length; i++) {
+		var view = views[i];
+		if (view.location.href == chrome.extension.getURL('guess_results.html')) {
+		view.close();
+		break;
+		}
+	}
+}
+
+// Get the background page in order to access variables
+//var bkg = chrome.extension.getBackgroundPage();
+
+// Get value of the timer
+//var timerValue = bkg.getTimerValue();
+
+// Get value of the user's guess
+//var userGuessTime = bkg.getUserGuessTime();
+var userGuessHoursTemp = 3;
+var userGuessMinsTemp = 34;
+
+// Calcluate the difference
+// var difference
+var differenceTemp = 45;
+
+// Turn that into minutes/hour format
+
+// Determine the correct message to display (spent more/less/same as thought)
+function getFinalMessage(difference) {
+	var message;
+	if (difference > 0) {	
+		message = "You spent more time online than you thought!";
+	} else if (difference < 0) {
+		message = "You spent less time online than you thought!";
+	} else {
+		message = "You guessed right on! Well done!";
+	}	
+	return message;
+}
+
+var finalMessage = getFinalMessage(differenceTemp);
+
+</script>
+</head>
+
+<body>
+<div id="box">
+<div id="close"><a href="#" onclick="closeMe()">x</a></div>
+
+<table id="guess-time-table">
+	<tr>
+		<td align="center" colspan=2>
+			<div id="title">Results</div>
+		</td>
+	</tr>
+	<tr>
+		<td align="center">
+			<img id="guess_time_image" src="clock_guess_placeholder.png"/>
+		</td>		
+		<td>
+			Actually, the time you spent was <script type="text/javascript"> document.write(userGuessTimeTest);</script>
+ hours and <script type="text/javascript"> document.write(userGuessMinsTemp);</script> minutes! Your guess was <script type="text/javascript"> document.write(differenceTemp);</script>  minutes less than that. <script type="text/javascript"> document.write(finalMessage);</script> 
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 align="right">
+			<input type="button" id="guess_results_continue_button" value="Continue" onclick=""/>
+		</td>
+	</tr>
+	
+</table>
+</div>
+</body>
+</html>
