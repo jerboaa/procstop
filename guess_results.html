@@ -81,31 +81,50 @@ function closeMe() {
 }
 
 // Get the background page in order to access variables
-//var bkg = chrome.extension.getBackgroundPage();
+var bkg = chrome.extension.getBackgroundPage();
 
 // Get value of the timer
-//var timerValue = bkg.getTimerValue();
+var actualTime = bkg.actualTimeout;
+console.log("actualTime:" + actualTime);
+
+// Turn the actual time into into minutes/hour format for display purposes
+var actualHours = Math.floor(actualTime / 3600);
+var actualMins = Math.floor(actualTime / 60) - (actualHours * 60);
 
 // Get value of the user's guess
-//var userGuessTime = bkg.getUserGuessTime();
-var userGuessHoursTemp = 3;
-var userGuessMinsTemp = 34;
+var guessMins = bkg.guessMins;
+var guessHours = bkg.guessHours;
 
-// Calcluate the difference
-// var difference
-var differenceTemp = 45;
+// Turn those values into total seconds in order to compare with actual time
+var guessTimeInSeconds = (guessMins * 60) + (guessHours * 3600);
 
-// Turn that into minutes/hour format
+// Calcluate the difference in seconds
+var difference = actualTime - guessTimeInSeconds;
+var absDifference = Math.abs(difference);
+
+// Make that into the minutes and hour format for display purposes
+var differenceHours = Math.floor(absDifference / 3600);
+var actualMins = Math.floor(absDifference / 60) - (differenceHours * 60);
+
+var differenceText = "";
+
+if (differenceHours > 0 && difference < 0) {
+	differenceText = differenceHours.toString() + " hours and " + differenceMins.toString() " minutes off!";
+} else if (difference == 0) {
+	differenceText = "right on!";
+} else {
+	differenceText = differenceMins.toString() + " minutes off."
+}
 
 // Determine the correct message to display (spent more/less/same as thought)
 function getFinalMessage(difference) {
 	var message;
 	if (difference > 0) {	
-		message = "You spent more time online than you thought!";
+		message = " You spent more time online than you thought!";
 	} else if (difference < 0) {
-		message = "You spent less time online than you thought!";
+		message = " You spent less time online than you thought!";
 	} else {
-		message = "You guessed right on! Well done!";
+		message = " Well done!";
 	}	
 	return message;
 }
@@ -130,8 +149,8 @@ var finalMessage = getFinalMessage(differenceTemp);
 			<img id="guess_time_image" src="clock_guess_placeholder.png"/>
 		</td>		
 		<td>
-			Actually, the time you spent was <script type="text/javascript"> document.write(userGuessTimeTest);</script>
- hours and <script type="text/javascript"> document.write(userGuessMinsTemp);</script> minutes! Your guess was <script type="text/javascript"> document.write(differenceTemp);</script>  minutes less than that. <script type="text/javascript"> document.write(finalMessage);</script> 
+			Actually, the time you spent was <script type="text/javascript"> document.write(actualHours);</script>
+ hours and <script type="text/javascript"> document.write(actualMins);</script> minutes! Your guess was <script type="text/javascript"> document.write(differenceText);</script><script type="text/javascript"> document.write(finalMessage);</script> 
 		</td>
 	</tr>
 	<tr>

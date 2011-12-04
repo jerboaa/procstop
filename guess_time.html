@@ -84,7 +84,7 @@ function closeMe() {
 var guessedHours;
 var guessedMinutes;
 
-// Sends the user's guess to the background page 
+// Sends the user's guess to the background page and load the guess_results page
 function sendUserGuess() {
 	hours = parseInt($('#hour-select')[0].value);
 	minutes = parseInt($('#minute-select')[0].value);
@@ -102,6 +102,7 @@ function sendUserGuess() {
 		}
 	);
 	
+	window.location.href = 'guess_results.html';
 }
 
 </script>
@@ -131,7 +132,7 @@ function sendUserGuess() {
 			</select>
 			hour(s) and 
 			<select id="minute-select">
-				<option value="1">0</option>
+				<option value="0">0</option>
 				<option value="1">1</option>
 				<option value="2">2</option>
 				<option value="3">3</option>
