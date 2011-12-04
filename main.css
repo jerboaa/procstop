@@ -11,3 +11,30 @@ span.help a {
   font-size: 0.8em;
 }
 
+div#box {
+  margin: 20px;
+  padding: 5px;
+  background: white;
+  border-radius: 5px;
+  -webkit-box-shadow: 2px 5px 12px #555;
+}
+
+div#close {
+  border-radius: 3px;
+  border: 1px solid #CCC;
+  position: absolute;
+  top: 25px;
+  right: 33px;
+  padding: 2px;
+  font-size: 0.8em;
+  width: 13px;
+  text-align: center;
+  vertical-align: middle;
+  color: Gray;
+}
+
+div#close a {
+  text-decoration: none;
+  color: Gray;
+}
+

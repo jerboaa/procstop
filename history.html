@@ -1,77 +1,20 @@
+<!DOCTYPE HTML> 
+<html>
+<head>
+<script src="close.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="main.css"/>
 <style>
-body {
-  min-width:357px;
-  overflow-x:hidden;
-}
-
-img {
-  margin:5px;
-  border:2px solid black;
-  vertical-align:middle;
-  width:75px;
-  height:75px;
+body { 
+  width: 600px;
+  height: 400px;
 }
 </style>
-<p>
-YEAAAAHh HISTOOORRYY
-
-</p>
-<input type="range" min="1" max="6" value="1" step="1" />
-<input type="button" value="Start" />
-<input type="checkbox" name="notificationCheckbox" value="notify" /> Enable notifications
-<a href="www.gamefaqs.com">History</a>
-<script>
-var req = new XMLHttpRequest();
-req.open(
-    "GET",
-    "http://api.flickr.com/services/rest/?" +
-        "method=flickr.photos.search&" +
-        "api_key=90485e931f687a9b9c2a66bf58a3861a&" +
-        "text=hello%20world&" +
-        "safe_search=1&" +  // 1 is "safe"
-        "content_type=1&" +  // 1 is "photos only"
-        "sort=relevance&" +  // another good one is "interestingness-desc"
-        "per_page=20",
-    true);
-req.onload = showPhotos;
-req.send(null);
-
-function showPhotos() {
-  var photos = req.responseXML.getElementsByTagName("photo");
-
-	// Create new paragraph
-	//newPara = document.createElement("p");	
-	var d = new Date();
-	timeMsg();
-	
-	// The text
-	var theDate = document.createTextNode(d.getTime() + " milliseconds since 1970/01/01");	
-	document.body.appendChild(theDate);
-	
-  for (var i = 0, photo; photo = photos[i]; i++) {
-    var img = document.createElement("image");
-    img.src = constructImageURL(photo);
-    document.body.appendChild(img);
-  }
-}
-
-// Calls alertMsg after 3000 milliseconds
-function timeMsg()
-{
-var t=setTimeout("alertMsg()",3000);
-}
-
-function alertMsg()
-{
- //alert("Hello");
-}
-
-// See: http://www.flickr.com/services/api/misc.urls.html
-function constructImageURL(photo) {
-  return "http://farm" + photo.getAttribute("farm") +
-      ".static.flickr.com/" + photo.getAttribute("server") +
-      "/" + photo.getAttribute("id") +
-      "_" + photo.getAttribute("secret") +
-      "_s.jpg";
-}
-</script>
+</head>
+<body>
+<div id="box">
+<div id="close"><a href="#" onclick="closeMe(chrome.extension.getURL('history.html'))">x</a></div>
+	<h1> Your satisfaction history </h1>
+	<img src="clock_guess_placeholder.png">
+</div>
+</body>
+</html>
