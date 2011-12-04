@@ -1,11 +1,25 @@
+<!DOCTYPE HTML> 
 <html>
 <head>
-<script src="jquery-1.7.1.min.js" type="text/javascript"></script>
+<script src="close.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="main.css"/>
 <style>
 body {
   width:400px;
-  height:325px;
+  height:245px;
+}
+
+/* add to what's in the linked stylesheet */
+div#box {
+  height: 215px;
+}
+
+div.controls {
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  margin-bottom: 17px;
+  margin-right: 7px;
 }
 
 img {
@@ -15,70 +29,22 @@ img {
   height:100px;
 }
 
-#main-text {
-  padding-left: 5px;
-  padding-top: 20px;
-}
-
-#history {
-  padding-left: 25px;
-}
-
-#start_button {
-  height: 50px;
-  width: 80px;
-}
-
-div#box {
-  margin: 20px;
-  padding: 5px;
-  background: white;
-  border-radius: 5px;
-  -webkit-box-shadow: 2px 5px 12px #555;
-}
-
-div#close {
-  border-radius: 3px;
-  border: 1px solid #CCC;
-  position: absolute;
-  top: 25px;
-  right: 33px;
-  padding: 2px;
-  font-size: 0.8em;
-  width: 13px;
-  text-align: center;
-  vertical-align: middle;
-  color: Gray;
+table#guess_time_table {
+  margin-top: 30px;
 }
 
 td.left-padded {
   padding-left: 23px;
 }
 
-div#close a {
-  text-decoration: none;
-  color: Gray;
-}
-
 div#title {
   text-align:center;
   font-size:40;
+  font-weight: bold;
 }
 
 </style>
 <script type="text/javascript">
-
-// close the pop-up
-function closeMe() {
-	var views = chrome.extension.getViews();
-      	for (var i = 0; i < views.length; i++) {
-		var view = views[i];
-		if (view.location.href == chrome.extension.getURL('guess_results.html')) {
-		view.close();
-		break;
-		}
-	}
-}
 
 // Get the background page in order to access variables
 //var bkg = chrome.extension.getBackgroundPage();
@@ -117,9 +83,9 @@ var finalMessage = getFinalMessage(differenceTemp);
 
 <body>
 <div id="box">
-<div id="close"><a href="#" onclick="closeMe()">x</a></div>
+<div id="close"><a href="#" onclick="closeMe(chrome.extension.getURL('guess_results.html'))">x</a></div>
 
-<table id="guess-time-table">
+<table id="guess_time_table">
 	<tr>
 		<td align="center" colspan=2>
 			<div id="title">Results</div>
@@ -134,11 +100,10 @@ var finalMessage = getFinalMessage(differenceTemp);
  hours and <script type="text/javascript"> document.write(userGuessMinsTemp);</script> minutes! Your guess was <script type="text/javascript"> document.write(differenceTemp);</script>  minutes less than that. <script type="text/javascript"> document.write(finalMessage);</script> 
 		</td>
 	</tr>
-	<tr>
-		<td colspan=2 align="right">
-			<input type="button" id="guess_results_continue_button" value="Continue" onclick=""/>
-		</td>
-	</tr>
+	<div class="controls">
+		<input type="button" value="Back" onclick="window.location.href = 'guess_time.html';"/>
+		<input type="button" id="guess_results_continue_button" value="Continue" onclick="window.location.href = 'satisfaction_rating.html'"/>
+	</div>
 	
 </table>
 </div>

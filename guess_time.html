@@ -1,11 +1,12 @@
+<!DOCTYPE HTML> 
 <html>
 <head>
-<script src="jquery-1.7.1.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="main.css"/>
+<script src="close.js" type="text/javascript"></script>
 <style>
 body {
-  width:400px;
-  height:325px;
+  width: 400px;
+  height: 245px;
 }
 
 img {
@@ -29,28 +30,6 @@ img {
   width: 80px;
 }
 
-div#box {
-  margin: 20px;
-  padding: 5px;
-  background: white;
-  border-radius: 5px;
-  -webkit-box-shadow: 2px 5px 12px #555;
-}
-
-div#close {
-  border-radius: 3px;
-  border: 1px solid #CCC;
-  position: absolute;
-  top: 25px;
-  right: 33px;
-  padding: 2px;
-  font-size: 0.8em;
-  width: 13px;
-  text-align: center;
-  vertical-align: middle;
-  color: Gray;
-}
-
 td.left-padded {
   padding-left: 23px;
 }
@@ -68,18 +47,6 @@ div#title {
 </style>
 <script type="text/javascript">
 
-// close the pop-up
-function closeMe() {
-	var views = chrome.extension.getViews();
-      	for (var i = 0; i < views.length; i++) {
-		var view = views[i];
-		if (view.location.href == chrome.extension.getURL('guess_time.html')) {
-			view.close();
-			break;
-		}
-	}
-}
-	
 // The hours and minutes that the user guesses
 var guessedHours;
 var guessedMinutes;
@@ -109,7 +76,7 @@ function sendUserGuess() {
 
 <body>
 <div id="box">
-<div id="close"><a href="#" onclick="closeMe()">x</a></div>
+<div id="close"><a href="#" onclick="closeMe(chrome.extension.getURL('guess_time.html'))">x</a></div>
 
 <table id="guess-time-table">
 	<tr>
@@ -205,7 +172,8 @@ function sendUserGuess() {
 	</tr>
 	<tr>
 		<td colspan=2 align="right">
-			<input type="button" id="guess_time_continue_button" value="Continue" onclick="sendUserGuess();"/>
+			<input type="button" value="Back" onclick="window.location.href = 'stretch.html';"/>
+			<input type="button" id="guess_time_continue_button" value="Continue" onclick="window.location.href = 'guess_results.html';"/>
 		</td>
 	</tr>
 	
