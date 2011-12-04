@@ -109,7 +109,7 @@ var actualMins = Math.floor(absDifference / 60) - (differenceHours * 60);
 var differenceText = "";
 
 if (differenceHours > 0 && difference < 0) {
-	differenceText = differenceHours.toString() + " hours and " + differenceMins.toString() " minutes off!";
+	differenceText = differenceHours.toString() + " hours and " + differenceMins.toString() + " minutes off!";
 } else if (difference == 0) {
 	differenceText = "right on!";
 } else {
