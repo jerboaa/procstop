@@ -42,6 +42,20 @@ div.controls {
   margin-right: 7px;
 }
 
+input#satisfaction_slider {
+  width: 250px;
+}
+
+span {
+  display: block;
+  width: 90px;
+}
+
+span#not_satisfied {
+  float: right;
+  text-align: right;
+}
+
 </style>
 </head>
 
@@ -67,7 +81,7 @@ div.controls {
 					</td>
 				</tr>				
 				<tr>
-					<td align="center"><input type="range" min="1" max="4" value="0" step="1" id="satisfaction-slider" /></td>
+					<td align="center"><input id="satisfaction_slider" type="range" min="0" max="4" value="0" step="1" id="satisfaction-slider" /></td>
 				</tr>
 				<tr>
 					<td>
