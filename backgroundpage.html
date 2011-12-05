@@ -98,7 +98,7 @@ chrome.extension.onRequest.addListener(
 			console.log("actual timeout of " + actualTimeout + " seconds");
 						
 			window.setTimeout( function() { showPopUpMessage() },
-				request.timeoutVal * 1000 );
+				request.timeoutVal * 1000 * 10 );
 		}
 		else if (request.started != null && request.started == false) {
 			isStarted = false;

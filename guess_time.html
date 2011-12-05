@@ -1,6 +1,7 @@
 <!DOCTYPE HTML> 
 <html>
 <head>
+<script src="jquery-1.7.1.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="main.css"/>
 <script src="close.js" type="text/javascript"></script>
 <style>
@@ -174,7 +175,7 @@ function sendUserGuess() {
 	<tr>
 		<td colspan=2 align="right">
 			<input type="button" value="Back" onclick="window.location.href = 'stretch.html';"/>
-			<input type="button" id="guess_time_continue_button" value="Continue" onclick="window.location.href = 'guess_results.html';"/>
+			<input type="button" id="guess_time_continue_button" value="Continue" onclick="sendUserGuess();"/>
 		</td>
 	</tr>
 	

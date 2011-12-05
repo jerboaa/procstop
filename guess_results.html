@@ -79,6 +79,7 @@ function getDifferenceText(difference, differenceHours, differenceMins) {
 		differenceText = "right on!";
 	} else {
 		differenceText = differenceMins.toString() + " minutes off.";
+		console.log(differenceText);
 	}
 	
 	return differenceText;
@@ -117,8 +118,17 @@ var finalMessage = getFinalMessage(difference);
 			<img id="guess_time_image" src="clock_guess_placeholder.png"/>
 		</td>		
 		<td>
-			Actually, the time you spent was <script type="text/javascript"> document.write(actualHours);</script>
- hours and <script type="text/javascript"> document.write(actualMins);</script> minutes! Your guess was <script type="text/javascript"> document.write(getDifferenceText(difference, differenceHours, differenceMins));</script><script type="text/javascript"> document.write(finalMessage);</script> 
+			Actually, the time you spent was
+			<script type="text/javascript">
+				document.write(actualHours);
+			</script> hours and 
+			<script type="text/javascript"> 
+				document.write(actualMins);
+			</script> minutes! Your guess was 
+			<script type="text/javascript">
+				document.write(getDifferenceText(difference, differenceHours, differenceMins));
+				document.write(finalMessage);
+			</script> 
 		</td>
 	</tr>
 	<div class="controls">
