@@ -2,6 +2,7 @@ body {
   font-family: Helvetica, sans-serif;
   background: -webkit-linear-gradient(#CCC, #AAA);
   background-attachment: fixed;
+  overflow: hidden;
 }
 
 span.help a {
