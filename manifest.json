@@ -1,6 +1,6 @@
 {
-  "name": "Itchy Duck",
-  "version": "1.0",
+  "name": "ProcSTOP",
+  "version": "0.5",
   "description": "Trains your perception of time.",
   "browser_action": {
     "default_icon": "icon.png",

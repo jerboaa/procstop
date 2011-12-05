@@ -74,12 +74,12 @@ var differenceMins = Math.floor(absDifference / 60) - (differenceHours * 60);
 function getDifferenceText(difference, differenceHours, differenceMins) {
 	var differenceText;
 	if (differenceHours > 0 && difference < 0) {
-		differenceText = differenceHours.toString() + " hours and " + differenceMins.toString() + " minutes off!";
+		differenceText = "<strong>" + differenceHours.toString() +
+			" hours and " + differenceMins.toString() + " minutes off!</strong>";
 	} else if (difference == 0) {
-		differenceText = "right on!";
+		differenceText = "<strong>right on!</strong>";
 	} else {
-		differenceText = differenceMins.toString() + " minutes off.";
-		console.log(differenceText);
+		differenceText = "<strong>" + differenceMins.toString() + " minutes off.</strong>";
 	}
 	
 	return differenceText;
