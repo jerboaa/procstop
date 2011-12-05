@@ -57,11 +57,13 @@ function cancelIconFlash() {
 // called after a given timeout when the add-on was started.
 function showPopUpMessage() {
 	console.log("timeout expired");
+	/*
 	// show the notification
 	var notification = webkitNotifications.createHTMLNotification(
 		'notification.html'
 	);
 	notification.show();
+	*/
 	// icon should flash
 	iconFlashId = window.setInterval( function() { flashIcon(); }, 500 );
 	isIconFlashing = true;
